@@ -8,22 +8,23 @@ const app = express();
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
+      host : 'db',
       port : 5432,
       user : 'postgres',
-      password : 'banan123',
-      database : 'smart-brains'
+      password : 'development',
+      database : 'Matlistan'
     }
   });
 
-/*db.select('*').from('users').then(data => {
+/*
+db.select('*').from('users').then(data => {
     console.log(data)
-});*/
+});
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(cors())
-
+*/
 
 const database = {
     users: [
@@ -53,8 +54,22 @@ const database = {
     ]
 }
 
+
 app.get('/', (req, res) => {
     res.send(database.users)
+    console.log("HEJ")
+})
+
+
+app.get('/users/', (req, res) => {
+    db.select('*').from('users').then(user => {
+        if (user.length) {
+            res.json(user)
+        } else {
+            res.status(400).json('Not found')
+        }
+    })
+    .catch(err => res.status(400).json('Error getting user'))
 })
 
 app.post('/signin', (req, res) => {

@@ -5,7 +5,7 @@ services:
         ports:
             - "3000:3000"
         volumes:
-            - ./frontend/src:/app/src
+            - ./frontend/src:/src
         environment:
             - REACT_APP_NAME=matlistanv2
     backend:
