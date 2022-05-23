@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <p>testar!</p>
+      <p>testar2!</p>
       <Recept />
     </div>
   );
