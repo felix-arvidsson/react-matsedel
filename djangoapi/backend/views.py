@@ -42,3 +42,5 @@ class ReceptViewSet(viewsets.ModelViewSet):
     """
     queryset = Recept.objects.all()
     serializer_class = ReceptSerializer
+
+ #   path('training/', include('training.urls')),

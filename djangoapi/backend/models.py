@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Livsmedel(models.Model):
     namn = models.CharField(max_length=30)
     kcal = models.FloatField(blank=False, default = 0)
@@ -16,6 +15,7 @@ class Recept(models.Model):
     instruktioner = models.TextField(max_length=500, blank=True)
     portioner = models.FloatField(default = 1)
     livsmedel = models.ManyToManyField(Livsmedel, through="Ingredienser")
+    author = models.ForeignKey('auth.user', related_name='recipees', on_delete=models.CASCADE)
     def __str__(self):
         return self.namn
 
