@@ -8,11 +8,11 @@ const app = express();
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
+      host : 'db',
       port : 5432,
       user : 'postgres',
-      password : 'banan123',
-      database : 'smart-brains'
+      password : 'development',
+      database : 'Matlistan'
     }
   });
 
@@ -54,8 +54,41 @@ const database = {
 }
 
 app.get('/', (req, res) => {
-    res.send(database.users)
+    db.select('*').from('users')
+    .then(users => {
+        if (users.length) {
+            res.json(users)
+        } else {
+            res.status(400).json('No users found')
+        }
+    })
 })
+
+/*
+db.select('*')
+  .from('recipee')
+  .join('recipee_ingredients', 'recipee.id', '=', 'recipee_ingredients.recipee_id')
+  .join('livsmedel', 'livsmedel.id', '=', 'recipee_ingredients.livsmedel_id')
+*/
+
+app.get('/recept/:id', (req, res) => {
+    const { id } = req.params;
+    db.select('*').from('recipee')
+        .join('recipee_ingredients', 'recipee.id', '=', 'recipee_ingredients.recipee_id')
+        .join('livsmedel', 'livsmedel.id', '=', 'recipee_ingredients.livsmedel_id')
+        .where('recipee.id', id)
+    .then(recipee => {
+        if (recipee.length) {
+            res.json(recipee)
+        } else {
+            res.status(400).json('No recipee found with that ID') 
+        }
+    })
+    .catch(err => res.status(400).json(err))
+})
+
+/* gammalt härnere */
+
 
 app.post('/signin', (req, res) => {
     // Load hash from your password DB.

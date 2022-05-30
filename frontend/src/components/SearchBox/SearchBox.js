@@ -8,7 +8,7 @@ const SearchBox = ({ searchChange }) => {
       <input
       className='pa3 ba b--green bg-lightest-blue'
       type="search"
-      placeholder='search cats'
+      placeholder='sök recept'
       onChange={searchChange}
       />
     </div>

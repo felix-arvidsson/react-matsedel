@@ -18,6 +18,13 @@ services:
             - REACT_APP_NAME=backend
         env_file:
             - ./.env
+    django-api:
+        build: ./djangoapi/
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./djangoapi/:/app/
+        ports: 
+            - "8000:8000"
     db:
         image: postgres
         restart: always
